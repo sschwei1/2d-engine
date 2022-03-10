@@ -12,8 +12,16 @@ project(${PROJECT_NAME})
 # c++ version
 set(CMAKE_CXX_STANDARD 20)
 
-find_package(SFML 2.5.1 COMPONENTS system window graphics audio network)
+# add static libaries in case mingw was used
+if(MINGW)
+    set(CMAKE_CXX_STANDARD_LIBRARIES "-static-libgcc -static-libstdc++ -lwsock32 -lws2_32 ${CMAKE_CXX_STANDARD_LIBRARIES}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic,--whole-archive -lwinpthread -Wl,--no-whole-archive")
+endif()
 
+# add static sfml libs
+set(SFML_STATIC_LIBRARIES TRUE)
+
+find_package(SFML 2.5.1 COMPONENTS system window graphics audio network)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 # link external libaries
