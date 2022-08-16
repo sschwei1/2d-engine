@@ -25,13 +25,23 @@ void e2d::Engine2d::initWindow() {
     this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
 
+void e2d::Engine2d::initStates() {
+    this->states.push(new e2d::states::GameState(this->window));
+}
+
 // constructors/destructors
 e2d::Engine2d::Engine2d() {
     this->initWindow();
+    this->initStates();
 }
 
 e2d::Engine2d::~Engine2d() {
     delete this->window;
+
+    while(!this->states.empty()) {
+        delete this->states.top();
+        this->states.pop();
+    }
 }
 
 
@@ -48,12 +58,17 @@ void e2d::Engine2d::updateSfmlEvents() {
 
 void e2d::Engine2d::update() {
     this->updateSfmlEvents();
+
+    if(!this->states.empty())
+        this->states.top()->update(this->dt);
 }
 
 void e2d::Engine2d::render() {
-    this->window->clear();
+    this->window->clear(sf::Color::Green);
 
     // render items
+    if(!this->states.empty())
+        this->states.top()->render(this->window);
 
     this->window->display();
 }

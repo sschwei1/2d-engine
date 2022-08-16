@@ -4,8 +4,8 @@
 
 #include "state.h"
 
-e2d::State::State() {
-
+e2d::State::State(sf::RenderWindow *window) {
+    this->window = window;
 }
 
 e2d::State::~State() {
