@@ -44,6 +44,9 @@ e2d::Engine2d::~Engine2d() {
     }
 }
 
+void e2d::Engine2d::endApplication() {
+    std::cout << "application ending\n";
+}
 
 void e2d::Engine2d::updateDt() {
     this ->dt = this->dtClock.restart().asSeconds();
@@ -59,8 +62,19 @@ void e2d::Engine2d::updateSfmlEvents() {
 void e2d::Engine2d::update() {
     this->updateSfmlEvents();
 
-    if(!this->states.empty())
+    if(!this->states.empty()) {
         this->states.top()->update(this->dt);
+
+        if(this->states.top()->getQuit()) {
+            this->states.top()->endState();
+            delete this->states.top();
+            this->states.pop();
+        }
+    } else {
+        // end application
+        this->endApplication();
+        this->window->close();
+    }
 }
 
 void e2d::Engine2d::render() {

@@ -4,10 +4,24 @@
 
 #include "state.h"
 
-e2d::State::State(sf::RenderWindow *window) {
-    this->window = window;
-}
+namespace e2d {
 
-e2d::State::~State() {
+    State::State(sf::RenderWindow *window) {
+        this->window = window;
+        this->quit = false;
+    }
 
+    State::~State() {
+
+    }
+
+    const bool& State::getQuit() const {
+        return this->quit;
+    }
+
+    void State::checkForQuit() {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+            this->quit = true;
+        }
+    }
 }

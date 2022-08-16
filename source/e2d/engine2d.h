@@ -26,11 +26,18 @@ namespace e2d {
         Engine2d();
         virtual ~Engine2d();
 
-        // functions
+        // regular functions
+        void endApplication();
+
+        // update functions
         void updateDt();
         void updateSfmlEvents();
         void update();
+
+        // render functions
         void render();
+
+        // core functions
         void run();
     };
 }

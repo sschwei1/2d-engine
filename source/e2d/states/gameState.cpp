@@ -15,11 +15,18 @@ namespace e2d::states {
     }
 
     void GameState::endState() {
-        
+        std::cout << "end gameState\n";
+    }
+
+    void GameState::updateKeybinds(const float &dt) {
+        this->checkForQuit();
     }
 
     void GameState::update(const float& dt) {
+        this->updateKeybinds(dt);
 
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            std::cout << "A is pressed!\n";
     }
 
     void GameState::render(sf::RenderTarget* target) {

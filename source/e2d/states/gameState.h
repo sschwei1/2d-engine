@@ -16,9 +16,9 @@ namespace e2d::states {
         GameState(sf::RenderWindow* window);
         virtual ~GameState();
 
-        // function
+        // functions
         void endState();
-
+        void updateKeybinds(const float& dt);
         void update(const float& dt);
         void render(sf::RenderTarget* target = nullptr);
     };
